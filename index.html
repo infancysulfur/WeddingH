@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>황윤현 ❤ 현지연 결혼합니다!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #FAF8F5;
+            color: #5D504E;
+        }
+        
+        .accent-color {
+            color: #B8A99A;
+        }
+        
+        .accent-bg {
+            background-color: #B8A99A;
+        }
+        
+        .accent-border {
+            border-color: #B8A99A;
+        }
+        
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            background-color: #F0EBE6;
+        }
+        
+        .carousel-slide {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(135deg, #E8DDD5 0%, #F5F0E8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #B8A99A;
+            transition: opacity 0.5s ease-in-out;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .carousel-slide.active {
+            opacity: 1;
+            position: relative;
+        }
+        
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #E8DDD5;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .carousel-dot.active {
+            background-color: #B8A99A;
+        }
+        
+        .button-primary {
+            background-color: #B8A99A;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .button-primary:hover {
+            background-color: #A89489;
+        }
+        
+        .button-secondary {
+            background-color: #F0EBE6;
+            color: #5D504E;
+            padding: 8px 12px;
+            border: 1px solid #B8A99A;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .button-secondary:hover {
+            background-color: #E8DDD5;
+        }
+        
+        .button-contact {
+            background-color: #B8A99A;
+            color: white;
+            padding: 8px 14px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+        
+        .button-contact:hover {
+            background-color: #A89489;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(184, 169, 154, 0.3);
+        }
+        
+        .contact-buttons-group {
+            display: flex;
+            gap: 8px;
+            margin-left: auto;
+        }
+        
+        .guestbook-message {
+            background-color: #FFF;
+            border-left: 3px solid #B8A99A;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .table-row {
+            display: flex;
+            flex-direction: column;
+            padding: 12px 0;
+            border-bottom: 1px solid #E8DDD5;
+        }
+        
+        .table-row:last-child {
+            border-bottom: none;
+        }
+        
+        .table-label {
+            font-weight: 600;
+            color: #5D504E;
+            margin-bottom: 8px;
+        }
+        
+        .table-value-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .table-value {
+            flex-shrink: 0;
+            color: #5D504E;
+        }
+
+        /* Modal arrow buttons */
+        .modal-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #B8A99A;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 999px;
+            cursor: pointer;
+            z-index: 60;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            opacity: 0.95;
+        }
+
+        .modal-arrow.left { left: 8px; }
+        .modal-arrow.right { right: 8px; }
+
+        @media (max-width: 640px) {
+            .modal-arrow { padding: 6px 10px; left: 6px; right: 6px; }
+            #modalImage { max-height: 60vh; }
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- Main Section -->
+    <section class="w-full bg-center bg-cover py-12 px-4 text-center" style="background-color: #F5F0E8;">
+        <div class="max-w-md mx-auto">
+            <!-- Main Image Placeholder -->
+            <div class="w-full h-182 md:h-100 lg:h-100 bg-gradient-to-br from-E8DDD5 to-F0EBE6 rounded-lg flex items-center justify-center mb-8">
+                <img src="images/main.jpg" alt="신혼부부" class="w-full h-full object-cover rounded-lg" onerror="this.style.display='none'">
+                <!-- <div class="text-center text-#B8A99A">
+                    <p class="text-xl accent-color"></p>
+                </div> -->
+            </div>
+            
+            <!-- Greeting -->
+            <h1 class="text-3xl font-light mb-4 accent-color">축복합니다</h1>
+            
+            <!-- Names -->
+            <div class="mb-6" style="background-color: #ffffff;">
+                <div class="flex justify-center items-center gap-2 mb-2" >
+                    <p class="text-2xl font-light">황윤현</p>
+                    <p class="text-2xl accent-color">&</p>
+                    <p class="text-2xl font-light">현지연</p>
+                </div>
+                <!-- Photo Modal -->
+                <div id="photoModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50 p-4">
+                    <div class="bg-white rounded-lg overflow-visible max-w-3xl w-full relative">
+                        <div class="flex items-center justify-between px-4 py-3 border-b" style="border-color:#E8DDD5;">
+                            <h3 id="modalTitle" class="text-sm font-medium" style="color:#5D504E;">사진</h3>
+                            <div class="flex items-center gap-2">
+                                <span id="modalCounter" class="text-xs accent-color"></span>
+                                <button onclick="closeModal()" class="button-secondary">닫기</button>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-gray-50 flex items-center justify-center">
+                            <div class="relative w-full flex items-center justify-center">
+                                <button onclick="prevImage()" class="modal-arrow left" aria-label="이전 사진">◀</button>
+                                <img id="modalImage" src="" alt="" class="max-h-[80vh] max-w-full object-contain rounded-md">
+                                <button onclick="nextImage()" class="modal-arrow right" aria-label="다음 사진">▶</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Greeting Text -->
+            <p class="text-sm leading-relaxed mb-8 accent-color" style="color: #5D504E;">
+                따뜻한 햇살과 꽃 향기 가득한 봄날, <br>저희 두 사람은 사랑이라는 이름으로 하나가 되려 합니다. 
+                <br>가족들만 모여 소박하게 예식을 올리게 되어
+                <br>직접 모시지 못한 점 너른 이해 부탁드립니다.
+                <br>멀리서 전해 주시는 응원과 축복에 감사드립니다.
+            </p>
+            
+            <div class="bg-white rounded-lg p-6 mb-8">
+                <div>
+                    <p class="text-xs accent-color mb-1">신랑</p>
+                    <p class="text-lg font-light mb-2">황우성ㆍ김미경의 아들</p>
+                    <p class="text-lg font-light" style="font-weight: bold;">황윤현</p>
+                    <br>
+                    <p class="text-xs accent-color mb-1">신부</p>                    
+                    <p class="text-lg font-light mb-2">현영창ㆍ이유리의 딸</p>
+                    <p class="text-lg font-light" style="font-weight: bold;">현지연</p>
+                </div>
+
+            </div>
+
+            <!-- Wedding Info -->
+            <div class="bg-white rounded-lg p-6 mb-8">
+                <div class="mb-4">
+                    <p class="text-xs accent-color mb-1">날짜</p>
+                    <p class="text-lg font-light">2026년 5월 2일 (토)</p>
+                </div>
+                <div class="mb-4">
+                    <p class="text-xs accent-color mb-1">시간</p>
+                    <p class="text-lg font-light">오후 12시 00분</p>
+                </div>
+                <!-- <div>
+                    <p class="text-xs accent-color mb-1">장소</p>
+                    <p class="text-sm font-light mb-1">더 그레이스 컨벤션 웨딩홀 (그랜드볼룸)</p>
+                    <p class="text-xs" style="color: #5D504E;">서울시 강남구 테헤란로 123</p>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="w-full py-12 px-4">
+        <div class="max-w-md mx-auto">
+            <h2 class="text-2xl font-light text-center mb-6 accent-color">사진 갤러리</h2>
+            
+            
+            <!-- Carousel -->
+            <div class="carousel-container rounded-lg mb-6">
+                <div id="carousel" class="relative w-full">
+                    <div class="carousel-slide active" data-index="0">
+                        <img src="images/gallery_1.jpg" alt="갤러리 1" class="w-full h-full object-cover" onerror="this.parentElement.style.backgroundColor='#E8DDD5'">
+                        <!-- <div class="absolute inset-0 flex items-center justify-center text-#B8A99A pointer-events-none" style="background-color: rgba(232, 221, 213, 0.5);">
+                            <p class="text-lg accent-color">images/gallery_1.jpg</p>
+                        </div> -->
+                    </div>
+                    <div class="carousel-slide" data-index="1">
+                        <img src="images/gallery_2.jpg" alt="갤러리 2" class="w-full h-full object-cover" onerror="this.parentElement.style.backgroundColor='#E8DDD5'">
+                        <!-- <div class="absolute inset-0 flex items-center justify-center text-#B8A99A pointer-events-none" style="background-color: rgba(232, 221, 213, 0.5);">
+                            <p class="text-lg accent-color">images/gallery_2.jpg</p>
+                        </div> -->
+                    </div>
+                    <div class="carousel-slide" data-index="2">
+                        <img src="images/gallery_3.jpg" alt="갤러리 3" class="w-full h-full object-cover" onerror="this.parentElement.style.backgroundColor='#E8DDD5'">
+                        <!-- <div class="absolute inset-0 flex items-center justify-center text-#B8A99A pointer-events-none" style="background-color: rgba(232, 221, 213, 0.5);">
+                            <p class="text-lg accent-color">images/gallery_3.jpg</p>
+                        </div> -->
+                    </div>
+                    <div class="carousel-slide" data-index="3">
+                        <img src="images/gallery_4.jpg" alt="갤러리 4" class="w-full h-full object-cover" onerror="this.parentElement.style.backgroundColor='#E8DDD5'">
+                        <!-- <div class="absolute inset-0 flex items-center justify-center text-#B8A99A pointer-events-none" style="background-color: rgba(232, 221, 213, 0.5);">
+                            <p class="text-lg accent-color">images/gallery_4.jpg</p>
+                        </div> -->
+                    </div>
+                    <div class="carousel-slide" data-index="4">
+                        <img src="images/gallery_5.jpg" alt="갤러리 5" class="w-full h-full object-cover" onerror="this.parentElement.style.backgroundColor='#E8DDD5'">
+                        <!-- <div class="absolute inset-0 flex items-center justify-center text-#B8A99A pointer-events-none" style="background-color: rgba(232, 221, 213, 0.5);">
+                            <p class="text-lg accent-color">images/gallery_5.jpg</p>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Carousel Dots -->
+            <div class="flex justify-center gap-2 mb-6">
+                <div class="carousel-dot active" data-index="0"></div>
+                <div class="carousel-dot" data-index="1"></div>
+                <div class="carousel-dot" data-index="2"></div>
+                <div class="carousel-dot" data-index="3"></div>
+                <div class="carousel-dot" data-index="4"></div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Account Section -->
+    <section class="w-full py-12 px-4" style="background-color: #F5F0E8;">
+        <div class="max-w-md mx-auto">
+            <h2 class="text-2xl font-light text-center mb-8 accent-color">마음 전하실 곳</h2>
+            
+            <!-- Groom Account -->
+            <div class="bg-white rounded-lg p-6 mb-6" style="border: 2px solid #B8A99A;">
+                <p class="text-sm font-light mb-2 accent-color">신랑</p>
+                <div class="flex items-center justify-between">
+                    <p class="text-sm">국민 123-45-67890 (황윤현)</p>
+                    <button class="button-secondary" onclick="copyToClipboard('123-45-67890')">복사</button>
+                </div>
+            </div>
+            
+            <!-- Bride Account -->
+            <div class="bg-white rounded-lg p-6" style="border: 2px solid #B8A99A;">
+                <p class="text-sm font-light mb-2 accent-color">신부</p>
+                <div class="flex items-center justify-between">
+                    <p class="text-sm">신한 987-65-43210 (현지연)</p>
+                    <button class="button-secondary" onclick="copyToClipboard('987-65-43210')">복사</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- BGM -->
+    <audio autoplay loop style="display: none;">
+        <source src="bgm/wedding.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Carousel functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const totalSlides = slides.length;
+        
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                dots[i].classList.remove('active');
+            });
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+        
+        // Auto-play carousel
+        setInterval(nextSlide, 5000);
+        
+        // Manual dot navigation
+        dots.forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                currentSlide = parseInt(e.target.dataset.index);
+                showSlide(currentSlide);
+            });
+        });
+
+        // --- Gallery modal setup ---
+        const galleryImages = [
+            { src: 'images/gallery_1.jpg', alt: '갤러리 1' },
+            { src: 'images/gallery_2.jpg', alt: '갤러리 2' },
+            { src: 'images/gallery_3.jpg', alt: '갤러리 3' },
+            { src: 'images/gallery_4.jpg', alt: '갤러리 4' },
+            { src: 'images/gallery_5.jpg', alt: '갤러리 5' }
+        ];
+
+        let currentImageIndex = 0;
+
+        // Open modal with given index
+        function openModal(index) {
+            currentImageIndex = index;
+            const modal = document.getElementById('photoModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalCounter = document.getElementById('modalCounter');
+
+            modalImage.src = galleryImages[index].src;
+            modalImage.alt = galleryImages[index].alt;
+            modalTitle.textContent = galleryImages[index].alt;
+            modalCounter.textContent = `${index + 1} / ${galleryImages.length}`;
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('photoModal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+            openModal(currentImageIndex);
+        }
+
+        function prevImage() {
+            currentImageIndex = currentImageIndex === 0 ? galleryImages.length - 1 : currentImageIndex - 1;
+            openModal(currentImageIndex);
+        }
+
+        // Attach click handlers to gallery images (slides)
+        document.querySelectorAll('.carousel-slide').forEach(slide => {
+            const idx = parseInt(slide.dataset.index, 10);
+            const img = slide.querySelector('img');
+            if (img) {
+                img.style.cursor = 'zoom-in';
+                img.addEventListener('click', () => openModal(idx));
+            }
+        });
+        
+        // Copy to clipboard
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('계좌번호가 복사되었습니다!');
+            }).catch(() => {
+                alert('복사에 실패했습니다.');
+            });
+        }
+        
+        // Navigation buttons
+        function openNavigation() {
+            const address = "서울시 강남구 테헤란로 123";
+            const encodedAddress = encodeURIComponent(address);
+            window.location.href = `https://maps.google.com/?q=${encodedAddress}`;
+        }
+        
+        function openTransit() {
+            alert('서울시 강남구 테헤란로 123\n\n대중교통:\n- 지하철 2호선 강남역 3번 출구\n- 강남역에서 약 5분 거리');
+        }
+        
+        function openParking() {
+            alert('주차 안내:\n- 웨딩홀 지하 주차장 이용\n- 무료 주차 (예식 당일)');
+        }
+        
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            // Page initialized
+        });
+    </script>
+
+</body>
+</html>
